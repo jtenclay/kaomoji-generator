@@ -1,5 +1,42 @@
 page-home {
-	#current-kao input {
-		text-align: center;
+
+	.kao-wrapper {
+		width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 	}
+
+	#current-kao {
+		font-size: 40px;
+		input {
+			text-align: center;
+		}
+	}
+
+	.eina {
+		position: absolute;
+		padding: 16px;
+		&.sw {
+			bottom: 0;
+			left: 0;
+		}
+		&.se {
+			bottom: 0;
+			right: 0;
+		}
+		&.nw {
+			top: 0;
+			left: 0;
+		}
+		&.ne {
+			top: 0;
+			right: 0;
+		}
+	}
+
+	.content {
+		background-color: yellow;
+	}
+
 }

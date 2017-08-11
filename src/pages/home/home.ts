@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LibraryPage } from '../library/library';
 import { Platform } from 'ionic-angular';
+import { ListPage } from '../list/list';
 
 class Kao {
 	face: string;
 	color: string;
 	shadowColor: string;
+	backgroundColor: string;
 }
 
 @Component({
@@ -23,12 +24,14 @@ export class HomePage {
 	currentKao: Kao = {
 		face: ":)",
 		color: "red",
-		shadowColor: "yellow"
+		shadowColor: "yellow",
+		backgroundColor: "blue"
 	}
 
 	currentKaoDOM;
+	backgroundDOM;
 
-	libraryPage = LibraryPage;
+	listPage = ListPage;
 
   constructor(public navCtrl: NavController, public plt: Platform) {
   	this.screenWidth = plt.width()
@@ -38,6 +41,7 @@ export class HomePage {
   ionViewDidLoad() {
     this.currentKaoDOM = document.getElementById('current-kao');
     this.fontSizeTesterDOM = document.getElementById('font-size-tester');
+    this.backgroundDOM = document.getElementById('kao-page');
   	this.updateKaoDOM();
   }
 
@@ -48,6 +52,7 @@ export class HomePage {
 
   updateKaoDOM() {
   	this.currentKaoDOM.style.color = this.currentKao.color;
+  	this.backgroundDOM.style.backgroundColor = this.currentKao.backgroundColor;
   }
 
   autoResizeKao() {
