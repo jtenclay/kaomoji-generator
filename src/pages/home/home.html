@@ -7,8 +7,14 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <!-- <p id="current-kao">{{currentKao.face}} {{currentKao.color}}</p> -->
+  <ion-input type="text" id="current-kao" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()"></ion-input>
+  <a>Edit</a>
+  <a>Save</a>
+  <a>Random</a>
+  <a [navPush]="libraryPage">Library</a>
+  <span id="font-size-tester"></span>
+
+<!--  <a (click)="updateKao('color', 'yellow')">change to yellow</a> -->
+
 </ion-content>
