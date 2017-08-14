@@ -23,7 +23,7 @@
 		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
 		  <a (click)="saveCurrentKao()">Save</a>
-		  <a [navPush]="listPage">List</a>
+		  <a (click)="navigateToList()">List</a>
 		</div>
 		<div class="edit-menu" *ngIf="showEditMenuFlag">
 	  	<a (click)="toggleEditMenu()">Done</a>

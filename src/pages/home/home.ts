@@ -73,16 +73,39 @@ export class HomePage {
   	this.screenWidth = plt.width()
   	this.screenHeight = plt.height()
 	  this.storage.forEach((val, key, i) => {
-  		this.kaoIndexToSave++;
-  	})
+	  	if (key.match(/savedKao[1234567890]/)) {
+	  		this.kaoIndexToSave++;
+	  	}
+  	});
   }
 
   ionViewDidLoad() {
+  	// after optimizing first launch to wait until this is loaded, take it out and only leave the one in ionViewWillEnter since it's redundant
+  	this.storage.get("currentKao").then((result) => {
+  		if (result.face) {
+  			this.currentKao = result;
+  			this.updateKaoDOM();
+  			this.autoResizeKao();
+  		}
+  	})
     this.currentKaoDOM = document.getElementById('current-kao');
     this.fontSizeTesterDOM = document.getElementById('font-size-tester');
     this.backgroundDOM = document.getElementById('kao-page');
-  	this.updateKaoDOM();
-  	this.autoResizeKao();
+  }
+
+  ionViewWillEnter() {
+  	this.storage.get("currentKao").then((result) => {
+  		if (result.face) {
+  			this.currentKao = result
+  			this.updateKaoDOM();
+  			this.autoResizeKao();
+  		}
+  	})
+  }
+
+  navigateToList() {
+  	this.storage.set("currentKao", this.currentKao)
+  	this.navCtrl.push(this.listPage);
   }
 
   updateKao(attr, val) {
@@ -130,7 +153,7 @@ export class HomePage {
 
   saveCurrentKao() {
   	this.currentKao.id = this.kaoIndexToSave;
-  	this.storage.set('currentKao' + this.kaoIndexToSave, this.currentKao);
+  	this.storage.set('savedKao' + this.kaoIndexToSave, this.currentKao);
   	this.kaoIndexToSave++
   }
 

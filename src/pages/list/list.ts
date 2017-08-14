@@ -42,7 +42,9 @@ export class ListPage {
   	this.kaoListHeight = (this.screenWidth - 96) / 2 / this.screenAspect;
   	let arrayOfKaos: Kao[] = [];
   	this.storage.forEach(function(val, key, i) {
-  		arrayOfKaos.push(val)
+  		if (key.match(/savedKao[1234567890]/)) {
+	  		arrayOfKaos.push(val)
+	  	}
   	})
   	this.loadedKaos = arrayOfKaos;
   }
@@ -53,4 +55,10 @@ export class ListPage {
     styleTag.textContent = "li.kao-li {height: " + this.kaoListHeight + "px;}";
     document.body.appendChild(styleTag);
   }
+
+  passKaoAndReturn(kao) {
+  	this.storage.set("currentKao", kao);
+  	this.navCtrl.pop();
+  }
+
 }
