@@ -48,10 +48,9 @@ export class ListPage {
   }
 
   ionViewDidLoad() {
-    // set list heights using the screen aspect
-    let body = document.body;
+    // set list heights using the screen aspect. I would have liked to loop through each li and use li.style.height but they had trouble rendering in time for the query call. the height is dynamic based on a variable here, so I couldn't write it directly into the scss.
     let styleTag = document.createElement("style");
     styleTag.textContent = "li.kao-li {height: " + this.kaoListHeight + "px;}";
-    body.appendChild(styleTag);
+    document.body.appendChild(styleTag);
   }
 }

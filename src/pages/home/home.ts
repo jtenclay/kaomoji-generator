@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { ListPage } from '../list/list';
 import { Storage } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 class Kao {
 	id: number;
@@ -17,7 +18,8 @@ class Kao {
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [Keyboard]
 })
 export class HomePage {
 
@@ -67,7 +69,7 @@ export class HomePage {
 
 	listPage = ListPage;
 
-  constructor(public navCtrl: NavController, public plt: Platform, private storage: Storage) {
+  constructor(public navCtrl: NavController, public plt: Platform, private storage: Storage, public keyboard: Keyboard) {
   	this.screenWidth = plt.width()
   	this.screenHeight = plt.height()
 	  this.storage.forEach((val, key, i) => {
@@ -80,7 +82,7 @@ export class HomePage {
     this.fontSizeTesterDOM = document.getElementById('font-size-tester');
     this.backgroundDOM = document.getElementById('kao-page');
   	this.updateKaoDOM();
-  	this.autoResizeKao()
+  	this.autoResizeKao();
   }
 
   updateKao(attr, val) {
