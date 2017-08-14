@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header hidden>
   <ion-navbar>
     <ion-title>
       Ionic Blank
@@ -21,13 +21,13 @@
 		</div>
   	<div class="main-menu" *ngIf="showMainMenuFlag">
 	  	<a (click)="toggleMainMenu()">&#92;/</a>
-		  <a>Edit</a>
+		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
 		  <a (click)="saveCurrentKao()">Save</a>
 		  <a [navPush]="listPage">List</a>
 		</div>
 		<div class="edit-menu" *ngIf="showEditMenuFlag">
-	  	<a>Done</a>
+	  	<a (click)="toggleEditMenu()">Done</a>
 		  <a>Color</a>
 		  <a>Shadow</a>
 		  <a>Background</a>

@@ -11,6 +11,9 @@ page-home {
 		font-size: 40px;
 		input {
 			text-align: center;
+			margin: 0;
+			padding: 16px;
+	    margin-bottom: 32px;
 		}
 	}
 
@@ -23,11 +26,11 @@ page-home {
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		padding: 16px;
 		display: flex;
 		a {
 			flex-grow: 1;
 			text-align: center;
+			padding: 16px;
 		}
 	}
 

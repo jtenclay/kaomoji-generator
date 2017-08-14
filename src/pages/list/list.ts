@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 /**
@@ -14,6 +15,9 @@ class Kao {
 	face: string;
 	color: string;
 	shadowColor: string;
+	shadowLength: number;
+	patternId: number; // to use background color instead of pattern, set patternId = -1
+	foregroundColor: string; // only used in patterns
 	backgroundColor: string;
 }
 
@@ -24,9 +28,18 @@ class Kao {
 })
 export class ListPage {
 
-	loadedKaos: Kao[] = [{id: 0, face: "", shadowColor: "", backgroundColor: "", color: ""}];
+	screenWidth: number = 0;
+	screenHeight: number = 0;
+	screenAspect: number = 0;
+	kaoListHeight: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+	loadedKaos: Kao[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public plt: Platform) {
+  	this.screenWidth = plt.width()
+  	this.screenHeight = plt.height()
+  	this.screenAspect = this.screenWidth/this.screenHeight;
+  	this.kaoListHeight = (this.screenWidth - 96) / 2 / this.screenAspect;
   	let arrayOfKaos: Kao[] = [];
   	this.storage.forEach(function(val, key, i) {
   		arrayOfKaos.push(val)
@@ -35,7 +48,10 @@ export class ListPage {
   }
 
   ionViewDidLoad() {
-    
+    // set list heights using the screen aspect
+    let body = document.body;
+    let styleTag = document.createElement("style");
+    styleTag.textContent = "li.kao-li {height: " + this.kaoListHeight + "px;}";
+    body.appendChild(styleTag);
   }
-
 }

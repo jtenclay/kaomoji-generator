@@ -29,7 +29,7 @@ export class HomePage {
 	currentKao: Kao = {
 		id: 0,
 		face: "(✿◕‿◕)",
-		color: "red",
+		color: "orange",
 		shadowColor: "yellow",
 		shadowLength: 0,
 		patternId: -1,
@@ -102,7 +102,7 @@ export class HomePage {
   		let inputHeight = this.fontSizeTesterDOM.offsetHeight
   		let inputWidth = this.fontSizeTesterDOM.offsetWidth
   		// go back to try to optimize this since it runs so much
-  		if (inputHeight / this.screenHeight > .8 || inputWidth / this.screenWidth > .8) {
+  		if (inputHeight / this.screenHeight > .5 || inputWidth / this.screenWidth > .7) {
   			return true;
   		} else {
   			return false;
@@ -141,6 +141,11 @@ export class HomePage {
   toggleMainMenu() {
   	this.showHiddenMenuFlag = !this.showHiddenMenuFlag;
   	this.showMainMenuFlag = !this.showMainMenuFlag;
+  }
+
+  toggleEditMenu() {
+  	this.showMainMenuFlag = !this.showMainMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
   }
 
 }
