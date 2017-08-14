@@ -9,12 +9,13 @@ page-home {
 
 	#current-kao {
 		font-size: 40px;
-		input {
+		&input {
 			text-align: center;
 			margin: 0;
 			padding: 16px;
 	    margin-bottom: 32px;
-	    user-select: auto !important;
+	    position: absolute;
+	    top: 50px;
 		}
 	}
 

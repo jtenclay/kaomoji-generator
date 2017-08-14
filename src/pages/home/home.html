@@ -8,8 +8,7 @@
 
 <ion-content padding id="kao-page">
 	<div class="kao-wrapper">
-	  <!-- <p id="current-kao">{{currentKao.face}} {{currentKao.color}}</p> -->
-	  <ion-input type="text" id="current-kao" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()"></ion-input>
+	  <input type="text" id="current-kao" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()">
   </div>
   <div class="bottom-menu">
   	<div class="hidden-menu" *ngIf="showHiddenMenuFlag">
