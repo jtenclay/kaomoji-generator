@@ -14,29 +14,21 @@ page-home {
 		}
 	}
 
-	.eina {
-		position: absolute;
-		padding: 16px;
-		&.sw {
-			bottom: 0;
-			left: 0;
-		}
-		&.se {
-			bottom: 0;
-			right: 0;
-		}
-		&.nw {
-			top: 0;
-			left: 0;
-		}
-		&.ne {
-			top: 0;
-			right: 0;
-		}
-	}
-
 	.content {
 		background-color: yellow;
+	}
+
+	.bottom-menu div {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		padding: 16px;
+		display: flex;
+		a {
+			flex-grow: 1;
+			text-align: center;
+		}
 	}
 
 }

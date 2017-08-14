@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { ListPage } from '../list/list';
+import { Storage } from '@ionic/storage';
 
 class Kao {
+	id: number;
 	face: string;
 	color: string;
 	shadowColor: string;
+	shadowLength: number;
+	patternId: number; // to use background color instead of pattern, set patternId = -1
+	foregroundColor: string; // only used in patterns
 	backgroundColor: string;
 }
 
@@ -22,20 +27,52 @@ export class HomePage {
 	fontSizeTester: string = "";
 
 	currentKao: Kao = {
-		face: ":)",
+		id: 0,
+		face: "(✿◕‿◕)",
 		color: "red",
 		shadowColor: "yellow",
-		backgroundColor: "blue"
+		shadowLength: 0,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "#c0ffee"
 	}
+
+	stockKaos: Kao[] = [{
+		id: 1000001,
+		face: "U・ᴥ・U",
+		color: "brown",
+		shadowColor: "red",
+		shadowLength: 5,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "beige"
+	}, {
+		id: 1000002,
+		face: "/ᐠ.ꞈ.ᐟ\\",
+		color: "cyan",
+		shadowColor: "white",
+		shadowLength: 15,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "blue"
+	}];
 
 	currentKaoDOM;
 	backgroundDOM;
+	kaoIndexToSave: number = 0;
+
+	showHiddenMenuFlag: boolean = false;
+	showMainMenuFlag: boolean = true;
+	showEditMenuFlag: boolean = false;
 
 	listPage = ListPage;
 
-  constructor(public navCtrl: NavController, public plt: Platform) {
+  constructor(public navCtrl: NavController, public plt: Platform, private storage: Storage) {
   	this.screenWidth = plt.width()
   	this.screenHeight = plt.height()
+	  this.storage.forEach((val, key, i) => {
+  		this.kaoIndexToSave++;
+  	})
   }
 
   ionViewDidLoad() {
@@ -43,6 +80,7 @@ export class HomePage {
     this.fontSizeTesterDOM = document.getElementById('font-size-tester');
     this.backgroundDOM = document.getElementById('kao-page');
   	this.updateKaoDOM();
+  	this.autoResizeKao()
   }
 
   updateKao(attr, val) {
@@ -53,6 +91,7 @@ export class HomePage {
   updateKaoDOM() {
   	this.currentKaoDOM.style.color = this.currentKao.color;
   	this.backgroundDOM.style.backgroundColor = this.currentKao.backgroundColor;
+  	this.autoResizeKao();
   }
 
   autoResizeKao() {
@@ -62,15 +101,16 @@ export class HomePage {
   	let inputIsTooBig = () => {
   		let inputHeight = this.fontSizeTesterDOM.offsetHeight
   		let inputWidth = this.fontSizeTesterDOM.offsetWidth
+  		// go back to try to optimize this since it runs so much
   		if (inputHeight / this.screenHeight > .8 || inputWidth / this.screenWidth > .8) {
-  			console.log("true")
   			return true;
   		} else {
-  			console.log("false")
   			return false;
   		}
   	}
-  	if (inputIsTooBig()) {
+  	if (this.currentKao.face.length == 0) {
+
+  	} else if (inputIsTooBig()) {
   		while (inputIsTooBig()) {
   			this.fontSizeTesterDOM.style.fontSize = this.currentKaoDOM.style.fontSize = (currentFontSize - 1) + "px";
   			currentFontSize = parseInt(window.getComputedStyle(this.currentKaoDOM, null).getPropertyValue('font-size'));
@@ -84,6 +124,23 @@ export class HomePage {
   		currentFontSize = parseInt(window.getComputedStyle(this.currentKaoDOM, null).getPropertyValue('font-size'));
   	}
   	this.fontSizeTesterDOM.style.display = "none";
+  }
+
+  saveCurrentKao() {
+  	this.currentKao.id = this.kaoIndexToSave;
+  	this.storage.set('currentKao' + this.kaoIndexToSave, this.currentKao);
+  	this.kaoIndexToSave++
+  }
+
+  randomKao() {
+  	let rand = Math.floor(Math.random() * this.stockKaos.length);
+  	this.currentKao = this.stockKaos[rand];
+  	this.updateKaoDOM();
+  }
+
+  toggleMainMenu() {
+  	this.showHiddenMenuFlag = !this.showHiddenMenuFlag;
+  	this.showMainMenuFlag = !this.showMainMenuFlag;
   }
 
 }

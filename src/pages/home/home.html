@@ -11,10 +11,28 @@
 	  <!-- <p id="current-kao">{{currentKao.face}} {{currentKao.color}}</p> -->
 	  <ion-input type="text" id="current-kao" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()"></ion-input>
   </div>
-  <a class="eina nw">Random</a>
-  <a class="eina sw">Edit</a>
-  <a class="eina ne">Save</a>
-  <a class="eina se" [navPush]="listPage">List</a>
+  <div class="bottom-menu">
+  	<div class="hidden-menu" *ngIf="showHiddenMenuFlag">
+	  	<a (click)="toggleMainMenu()">/&#92;</a>
+		  <a>&nbsp;</a>
+		  <a>&nbsp;</a>
+		  <a>&nbsp;</a>
+		  <a>&nbsp;</a>
+		</div>
+  	<div class="main-menu" *ngIf="showMainMenuFlag">
+	  	<a (click)="toggleMainMenu()">&#92;/</a>
+		  <a>Edit</a>
+		  <a (click)="randomKao()">Random</a>
+		  <a (click)="saveCurrentKao()">Save</a>
+		  <a [navPush]="listPage">List</a>
+		</div>
+		<div class="edit-menu" *ngIf="showEditMenuFlag">
+	  	<a>Done</a>
+		  <a>Color</a>
+		  <a>Shadow</a>
+		  <a>Background</a>
+	  </div>
+  </div>
   <span id="font-size-tester"></span>
 
 	<!--  <a (click)="updateKao('color', 'yellow')">change to yellow</a> -->
