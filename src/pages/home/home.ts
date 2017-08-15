@@ -105,6 +105,7 @@ export class HomePage {
   	this.navCtrl.push(this.listPage);
   }
 
+  // unused???
   updateKao(attr, val) {
   	this.currentKao[attr] = val;
   	this.updateKaoDOM();

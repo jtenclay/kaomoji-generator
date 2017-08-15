@@ -38,12 +38,10 @@
 		</div>
   	<div class="shadow-menu" *ngIf="showShadowMenuFlag">
 	  	<a (click)="cancelShadowMenu()">&lt; Cancel</a>
-		  <input [(ngModel)]="currentKao.shadowColor" (change)="updateKaoDOM()">
-		  <input [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()">
+		  <span>Color: <input [(ngModel)]="currentKao.shadowColor" (change)="updateKaoDOM()"></span>
+		  <span>Length: <input [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()"></span>
 		  <a (click)="toggleShadowMenu()">Done</a>
 		</div>
   </div>
   <span id="font-size-tester"></span>
-
-	<!--  <a (click)="updateKao('color', 'yellow')">change to yellow</a> -->
 </ion-content>

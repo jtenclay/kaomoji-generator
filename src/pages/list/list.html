@@ -15,6 +15,6 @@
 
 <ion-content padding>
 <ul>
-		<li class="kao-li" *ngFor="let kao of loadedKaos" (click)="passKaoAndReturn(kao)">{{kao.face}}</li>
+		<li class="kao-li" *ngFor="let kao of loadedKaos" (click)="passKaoAndReturn(kao)" id="kao-{{kao.id}}"><div><span>{{kao.face}}</span></div></li>
 	</ul>
 </ion-content>

@@ -31,14 +31,19 @@ export class ListPage {
 	screenWidth: number = 0;
 	screenHeight: number = 0;
 	screenAspect: number = 0;
+	kaoListWidth: number = 0;
 	kaoListHeight: number = 0;
 
 	loadedKaos: Kao[];
+
+	// "~~~" is the placeholder for the foreground color
+	backgroundDefs: string[] = ["url(\"data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='~~~' fill-rule='evenodd'/%3E%3C/svg%3E\")"]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, public plt: Platform) {
   	this.screenWidth = plt.width()
   	this.screenHeight = plt.height()
   	this.screenAspect = this.screenWidth/this.screenHeight;
+  	this.kaoListWidth = (this.screenWidth - 96) / 2;
   	this.kaoListHeight = (this.screenWidth - 96) / 2 / this.screenAspect;
   	let arrayOfKaos: Kao[] = [];
   	this.storage.forEach(function(val, key, i) {
@@ -49,11 +54,66 @@ export class ListPage {
   	this.loadedKaos = arrayOfKaos;
   }
 
-  ionViewDidLoad() {
-    // set list heights using the screen aspect. I would have liked to loop through each li and use li.style.height but they had trouble rendering in time for the query call. the height is dynamic based on a variable here, so I couldn't write it directly into the scss.
-    let styleTag = document.createElement("style");
-    styleTag.textContent = "li.kao-li {height: " + this.kaoListHeight + "px;}";
-    document.body.appendChild(styleTag);
+  ionViewDidEnter() {
+    for (let kao of this.loadedKaos) {
+    	this.updateKaoListDOM(kao.id)
+    }
+  }
+
+  updateKaoListDOM(kaoId) {
+  	let kao = this.loadedKaos.find(x => x.id === kaoId);
+  	let kaoBackgroundDOM = document.getElementById("kao-" + kaoId).querySelector("div");
+  	let kaoDOM = kaoBackgroundDOM.querySelector("span");
+  	let textShadow = "";
+  	kaoBackgroundDOM.style.height = this.kaoListHeight + "px";
+  	for (let i = 1; i <= kao.shadowLength / 2; i++) { // shadow / 2 because it's half as big
+  		textShadow += i + "px " + i + "px 0 " + kao.shadowColor + ", ";
+  	}
+  	// remove trailing comma and set textShadow
+  	kaoDOM.style.textShadow = textShadow.substring(0, textShadow.length - 2);
+  	kaoDOM.style.color = kao.color;
+		kaoBackgroundDOM.style.backgroundColor = kao.backgroundColor;
+  	if (kao.patternId !== -1) {
+  		// format background SVG and then set it
+  		kaoBackgroundDOM.style.backgroundImage = this.backgroundDefs[kao.patternId].replace(/~~~/, kao.foregroundColor);
+  	} else {
+  		kaoBackgroundDOM.style.backgroundImage = "none";
+  	}
+  	this.autoResizeKao(kao, kaoDOM);
+  }
+
+  autoResizeKao(kao, kaoDOM) {
+  	let currentFontSize = parseInt(window.getComputedStyle(kaoDOM, null).getPropertyValue('font-size'));
+  	let fontSizeTesterDOM = document.createElement("span");
+  	fontSizeTesterDOM.textContent = kao.face;
+  	fontSizeTesterDOM.style.display = "inline-block";
+  	document.body.appendChild(fontSizeTesterDOM);
+  	let inputIsTooBig = () => {
+  		let inputHeight = fontSizeTesterDOM.offsetHeight
+  		let inputWidth = fontSizeTesterDOM.offsetWidth
+  		// go back to try to optimize this since it runs so much
+  		if (inputHeight / this.kaoListHeight > .5 || inputWidth / this.kaoListWidth > .7) {
+  			return true;
+  		} else {
+  			return false;
+  		}
+  	}
+  	if (kao.face.length == 0) {
+
+  	} else if (inputIsTooBig()) {
+  		while (inputIsTooBig()) {
+  			fontSizeTesterDOM.style.fontSize = kaoDOM.style.fontSize = (currentFontSize - 1) + "px";
+  			currentFontSize = parseInt(window.getComputedStyle(kaoDOM, null).getPropertyValue('font-size'));
+  		}
+  	} else {
+  		while (!inputIsTooBig()) {
+  			fontSizeTesterDOM.style.fontSize = kaoDOM.style.fontSize = (currentFontSize + 1) + "px";
+  			currentFontSize = parseInt(window.getComputedStyle(kaoDOM, null).getPropertyValue('font-size'));
+  		}
+  		fontSizeTesterDOM.style.fontSize = kaoDOM.style.fontSize = (currentFontSize - 1) + "px"
+  		currentFontSize = parseInt(window.getComputedStyle(kaoDOM, null).getPropertyValue('font-size'));
+  	}
+  	document.body.removeChild(fontSizeTesterDOM);
   }
 
   passKaoAndReturn(kao) {
