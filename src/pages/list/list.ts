@@ -51,6 +51,10 @@ export class ListPage {
   	this.storage.forEach(function(val, key, i) {
   		if (key.match(/savedKao[1234567890]/)) {
 	  		arrayOfKaos.push(val)
+	  		// sort kaos by id to make sure newest is first. unfortunately outside the loop was too late to update DOM order
+	  		arrayOfKaos.sort(function(a, b) {
+		  		return b.id - a.id;
+		  	})
 	  	}
   	})
   	this.loadedKaos = arrayOfKaos;
