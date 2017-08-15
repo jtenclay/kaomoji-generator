@@ -36,6 +36,8 @@ export class ListPage {
 
 	loadedKaos: Kao[];
 
+	currentlyEditingFlag: boolean = false;
+
 	// "~~~" is the placeholder for the foreground color
 	backgroundDefs: string[] = ["url(\"data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='~~~' fill-rule='evenodd'/%3E%3C/svg%3E\")"]
 
@@ -120,6 +122,15 @@ export class ListPage {
   passKaoAndReturn(kao) {
   	this.storage.set("currentKao", kao);
   	this.navCtrl.pop();
+  }
+
+  toggleEditState() {
+  	this.currentlyEditingFlag = !this.currentlyEditingFlag;
+  }
+
+  deleteKao(kao) {
+		this.storage.remove("savedKao" + kao.id);
+		this.loadedKaos.splice(kao.id, 1);
   }
 
 }
