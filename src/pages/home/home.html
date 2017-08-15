@@ -27,10 +27,21 @@
 		</div>
 		<div class="edit-menu" *ngIf="showEditMenuFlag">
 	  	<a (click)="toggleEditMenu()">Done</a>
-		  <a>Color</a>
-		  <a>Shadow</a>
+		  <a (click)="toggleColorMenu()">Color</a>
+		  <a (click)="toggleShadowMenu()">Shadow</a>
 		  <a>Background</a>
 	  </div>
+  	<div class="color-menu" *ngIf="showColorMenuFlag">
+	  	<a (click)="cancelColorMenu()">&lt; Cancel</a>
+		  <input [(ngModel)]="currentKao.color" (change)="updateKaoDOM()">
+		  <a (click)="toggleColorMenu()">Done</a>
+		</div>
+  	<div class="shadow-menu" *ngIf="showShadowMenuFlag">
+	  	<a (click)="cancelShadowMenu()">&lt; Cancel</a>
+		  <input [(ngModel)]="currentKao.shadowColor" (change)="updateKaoDOM()">
+		  <input [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()">
+		  <a (click)="toggleShadowMenu()">Done</a>
+		</div>
   </div>
   <span id="font-size-tester"></span>
 

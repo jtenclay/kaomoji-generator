@@ -28,16 +28,8 @@ export class HomePage {
 	fontSizeTesterDOM;
 	fontSizeTester: string = "";
 
-	currentKao: Kao = {
-		id: 0,
-		face: "(✿◕‿◕)",
-		color: "orange",
-		shadowColor: "yellow",
-		shadowLength: 0,
-		patternId: -1,
-		foregroundColor: "white",
-		backgroundColor: "#c0ffee"
-	}
+	currentKao: Kao = new Kao();
+	uneditedKao: Kao = new Kao();
 
 	stockKaos: Kao[] = [{
 		id: 1000001,
@@ -45,7 +37,7 @@ export class HomePage {
 		color: "brown",
 		shadowColor: "red",
 		shadowLength: 5,
-		patternId: -1,
+		patternId: 0,
 		foregroundColor: "white",
 		backgroundColor: "beige"
 	}, {
@@ -54,7 +46,7 @@ export class HomePage {
 		color: "cyan",
 		shadowColor: "white",
 		shadowLength: 15,
-		patternId: 0,
+		patternId: -1,
 		foregroundColor: "white",
 		backgroundColor: "blue"
 	}];
@@ -69,6 +61,8 @@ export class HomePage {
 	showHiddenMenuFlag: boolean = false;
 	showMainMenuFlag: boolean = true;
 	showEditMenuFlag: boolean = false;
+	showColorMenuFlag: boolean = false;
+	showShadowMenuFlag: boolean = false;
 
 	listPage = ListPage;
 
@@ -129,6 +123,8 @@ export class HomePage {
   	if (this.currentKao.patternId !== -1) {
   		// format background SVG and then set it
   		this.backgroundDOM.style.backgroundImage = this.backgroundDefs[this.currentKao.patternId].replace(/~~~/, this.currentKao.foregroundColor);
+  	} else {
+  		this.backgroundDOM.style.backgroundImage = "none";
   	}
   	this.autoResizeKao();
   }
@@ -184,6 +180,36 @@ export class HomePage {
 
   toggleEditMenu() {
   	this.showMainMenuFlag = !this.showMainMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  toggleColorMenu() {
+  	this.uneditedKao.color = this.currentKao.color;
+  	this.updateKaoDOM();
+  	this.showColorMenuFlag = !this.showColorMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  cancelColorMenu() {
+  	this.currentKao.color = this.uneditedKao.color;
+  	this.updateKaoDOM();
+  	this.showColorMenuFlag = !this.showColorMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  toggleShadowMenu() {
+  	this.uneditedKao.shadowColor = this.currentKao.shadowColor;
+  	this.uneditedKao.shadowLength = this.currentKao.shadowLength;
+  	this.updateKaoDOM();
+  	this.showShadowMenuFlag = !this.showShadowMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  cancelShadowMenu() {
+  	this.currentKao.shadowColor = this.uneditedKao.shadowColor;
+  	this.currentKao.shadowLength = this.uneditedKao.shadowLength;
+  	this.updateKaoDOM();
+  	this.showShadowMenuFlag = !this.showShadowMenuFlag;
   	this.showEditMenuFlag = !this.showEditMenuFlag;
   }
 
