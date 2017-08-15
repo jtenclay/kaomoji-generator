@@ -18,7 +18,7 @@
 
 
 <ion-content padding>
-<ul>
+<ul id="kao-ul">
 		<li class="kao-li" *ngFor="let kao of loadedKaos" id="kao-{{kao.id}}"><a *ngIf="currentlyEditingFlag" (click)="deleteKao(kao)">X</a><div (click)="passKaoAndReturn(kao)"><span>{{kao.face}}</span></div></li>
 	</ul>
 </ion-content>

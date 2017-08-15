@@ -72,7 +72,7 @@ export class HomePage {
 		face: "✌︎('ω'✌︎ )",
 		color: "white",
 		shadowColor: "white",
-		shadowLength: 5,
+		shadowLength: 0,
 		patternId: -1,
 		foregroundColor: "white",
 		backgroundColor: "cornflowerblue"
@@ -94,8 +94,8 @@ export class HomePage {
 	backgroundDOM;
 	kaoIndexToSave: number = 0;
 
-	showHiddenMenuFlag: boolean = true;
-	showMainMenuFlag: boolean = false;
+	showHiddenMenuFlag: boolean = false;
+	showMainMenuFlag: boolean = true;
 	showEditMenuFlag: boolean = false;
 	showColorMenuFlag: boolean = false;
 	showShadowMenuFlag: boolean = false;
@@ -109,7 +109,9 @@ export class HomePage {
   	this.screenHeight = plt.height()
 	  this.storage.forEach((val, key, i) => {
 	  	if (key.match(/savedKao[1234567890]/)) {
-	  		this.kaoIndexToSave++;
+	  		if (val.id >= this.kaoIndexToSave) {
+	  			this.kaoIndexToSave = val.id + 1;
+	  		}
 	  	}
   	});
   }

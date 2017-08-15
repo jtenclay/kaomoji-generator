@@ -129,8 +129,10 @@ export class ListPage {
   }
 
   deleteKao(kao) {
-		this.storage.remove("savedKao" + kao.id);
-		this.loadedKaos.splice(kao.id, 1);
+  	let kaoLiDOM = document.getElementById("kao-" + kao.id);
+  	let kaoUlDOM = document.getElementById("kao-ul");
+  	this.storage.remove("savedKao" + kao.id);
+  	kaoUlDOM.removeChild(kaoLiDOM);
   }
 
 }
