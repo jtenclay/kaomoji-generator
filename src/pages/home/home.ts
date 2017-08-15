@@ -32,23 +32,59 @@ export class HomePage {
 	uneditedKao: Kao = new Kao();
 
 	stockKaos: Kao[] = [{
-		id: 1000001,
+		id: 0,
 		face: "U・ᴥ・U",
-		color: "brown",
-		shadowColor: "red",
+		color: "maroon",
+		shadowColor: "brown",
 		shadowLength: 5,
 		patternId: 0,
 		foregroundColor: "white",
 		backgroundColor: "beige"
 	}, {
-		id: 1000002,
-		face: "/ᐠ.ꞈ.ᐟ\\",
-		color: "cyan",
+		id: 0,
+		face: "  (=`ω´=)  ",
+		color: "aquamarine",
 		shadowColor: "white",
-		shadowLength: 15,
+		shadowLength: 0,
 		patternId: -1,
 		foregroundColor: "white",
-		backgroundColor: "blue"
+		backgroundColor: "steelblue"
+	}, {
+		id: 0,
+		face: "(✿◕‿◕)",
+		color: "coral",
+		shadowColor: "white",
+		shadowLength: 0,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "moccasin"
+	}, {
+		id: 0,
+		face: "(●´ω｀●)",
+		color: "navy",
+		shadowColor: "white",
+		shadowLength: 5,
+		patternId: 0,
+		foregroundColor: "beige",
+		backgroundColor: "moccasin"
+	}, {
+		id: 0,
+		face: "✌︎('ω'✌︎ )",
+		color: "white",
+		shadowColor: "white",
+		shadowLength: 5,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "cornflowerblue"
+	}, {
+		id: 0,
+		face: "(｀_´)ゞ",
+		color: "orchid",
+		shadowColor: "white",
+		shadowLength: 0,
+		patternId: -1,
+		foregroundColor: "white",
+		backgroundColor: "blueviolet"
 	}];
 
 	// "~~~" is the placeholder for the foreground color
@@ -58,11 +94,13 @@ export class HomePage {
 	backgroundDOM;
 	kaoIndexToSave: number = 0;
 
-	showHiddenMenuFlag: boolean = false;
-	showMainMenuFlag: boolean = true;
+	showHiddenMenuFlag: boolean = true;
+	showMainMenuFlag: boolean = false;
 	showEditMenuFlag: boolean = false;
 	showColorMenuFlag: boolean = false;
 	showShadowMenuFlag: boolean = false;
+	showBackgroundMenuFlag: boolean = false;
+	showPatternMenuFlag: boolean = false;
 
 	listPage = ListPage;
 
@@ -132,7 +170,8 @@ export class HomePage {
 
   autoResizeKao() {
   	let currentFontSize = parseInt(window.getComputedStyle(this.currentKaoDOM, null).getPropertyValue('font-size'));
-  	this.fontSizeTesterDOM.innerHTML = this.currentKao.face;
+  	// replace spaces with nbsp so they're not condensed
+  	this.fontSizeTesterDOM.innerHTML = this.currentKao.face.replace(/ /g, "\xa0");
   	this.fontSizeTesterDOM.style.display = "inline-block";
   	let inputIsTooBig = () => {
   		let inputHeight = this.fontSizeTesterDOM.offsetHeight
@@ -211,6 +250,36 @@ export class HomePage {
   	this.currentKao.shadowLength = this.uneditedKao.shadowLength;
   	this.updateKaoDOM();
   	this.showShadowMenuFlag = !this.showShadowMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  toggleBackgroundMenu() {
+  	this.uneditedKao.backgroundColor = this.currentKao.backgroundColor;
+  	this.updateKaoDOM();
+  	this.showBackgroundMenuFlag = !this.showBackgroundMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  cancelBackgroundMenu() {
+  	this.currentKao.backgroundColor = this.uneditedKao.backgroundColor;
+  	this.updateKaoDOM();
+  	this.showBackgroundMenuFlag = !this.showBackgroundMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  togglePatternMenu() {
+  	this.uneditedKao.foregroundColor = this.currentKao.foregroundColor;
+  	this.uneditedKao.patternId = this.currentKao.patternId;
+  	this.updateKaoDOM();
+  	this.showPatternMenuFlag = !this.showPatternMenuFlag;
+  	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  cancelPatternMenu() {
+  	this.currentKao.foregroundColor = this.uneditedKao.foregroundColor;
+  	this.currentKao.patternId = this.uneditedKao.patternId;
+  	this.updateKaoDOM();
+  	this.showPatternMenuFlag = !this.showPatternMenuFlag;
   	this.showEditMenuFlag = !this.showEditMenuFlag;
   }
 

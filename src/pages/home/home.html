@@ -12,14 +12,11 @@
   </div>
   <div class="bottom-menu">
   	<div class="hidden-menu" *ngIf="showHiddenMenuFlag">
-	  	<a (click)="toggleMainMenu()">/&#92;</a>
-		  <a>&nbsp;</a>
-		  <a>&nbsp;</a>
-		  <a>&nbsp;</a>
+	  	<a (click)="toggleMainMenu()" class="toggle-menu">/&#92;</a>
 		  <a>&nbsp;</a>
 		</div>
   	<div class="main-menu" *ngIf="showMainMenuFlag">
-	  	<a (click)="toggleMainMenu()">&#92;/</a>
+	  	<a (click)="toggleMainMenu()" class="toggle-menu">&#92;/</a>
 		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
 		  <a (click)="saveCurrentKao()">Save</a>
@@ -29,11 +26,12 @@
 	  	<a (click)="toggleEditMenu()">Done</a>
 		  <a (click)="toggleColorMenu()">Color</a>
 		  <a (click)="toggleShadowMenu()">Shadow</a>
-		  <a>Background</a>
+		  <a (click)="toggleBackgroundMenu()">Background</a>
+		  <a (click)="togglePatternMenu()">Pattern</a>
 	  </div>
   	<div class="color-menu" *ngIf="showColorMenuFlag">
 	  	<a (click)="cancelColorMenu()">&lt; Cancel</a>
-		  <input [(ngModel)]="currentKao.color" (change)="updateKaoDOM()">
+		  <span>Color: <input [(ngModel)]="currentKao.color" (change)="updateKaoDOM()"></span>
 		  <a (click)="toggleColorMenu()">Done</a>
 		</div>
   	<div class="shadow-menu" *ngIf="showShadowMenuFlag">
@@ -41,6 +39,17 @@
 		  <span>Color: <input [(ngModel)]="currentKao.shadowColor" (change)="updateKaoDOM()"></span>
 		  <span>Length: <input [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()"></span>
 		  <a (click)="toggleShadowMenu()">Done</a>
+		</div>
+  	<div class="background-menu" *ngIf="showBackgroundMenuFlag">
+	  	<a (click)="cancelBackgroundMenu()">&lt; Cancel</a>
+		  <span>Color: <input [(ngModel)]="currentKao.backgroundColor" (change)="updateKaoDOM()"></span>
+		  <a (click)="toggleBackgroundMenu()">Done</a>
+		</div>
+  	<div class="pattern-menu" *ngIf="showPatternMenuFlag">
+	  	<a (click)="cancelPatternMenu()">&lt; Cancel</a>
+		  <span>Id: <input [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
+		  <span>Color: <input [(ngModel)]="currentKao.foregroundColor" (change)="updateKaoDOM()"></span>
+		  <a (click)="togglePatternMenu()">Done</a>
 		</div>
   </div>
   <span id="font-size-tester"></span>

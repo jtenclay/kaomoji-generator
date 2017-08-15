@@ -85,7 +85,8 @@ export class ListPage {
   autoResizeKao(kao, kaoDOM) {
   	let currentFontSize = parseInt(window.getComputedStyle(kaoDOM, null).getPropertyValue('font-size'));
   	let fontSizeTesterDOM = document.createElement("span");
-  	fontSizeTesterDOM.textContent = kao.face;
+  	// replace spaces with nbsp so they're not condensed
+  	fontSizeTesterDOM.textContent = kao.face.replace(/ /g, "\xa0");
   	fontSizeTesterDOM.style.display = "inline-block";
   	document.body.appendChild(fontSizeTesterDOM);
   	let inputIsTooBig = () => {
