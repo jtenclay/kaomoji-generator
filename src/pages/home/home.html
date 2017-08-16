@@ -47,8 +47,9 @@
 		</div>
   	<div class="pattern-menu" [ngClass]="{'hide-below': !showPatternMenuFlag}">
 	  	<a (click)="cancelPatternMenu()">&lt; Cancel</a>
-		  <span>Id: <input [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
-		  <span>Color: <input [(ngModel)]="currentKao.foregroundColor" (change)="updateKaoDOM()"></span>
+	  	<span><label><input type="checkbox" [(ngModel)]="currentKaoUsesPattern" (change)="updateUsesPattern()"> Use Pattern</label></span>
+		  <span *ngIf="currentKaoUsesPattern">Id: <input [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
+		  <span *ngIf="currentKaoUsesPattern">Color: <input [(ngModel)]="currentKao.foregroundColor" (change)="updateKaoDOM()"></span>
 		  <a (click)="togglePatternMenu()">Done</a>
 		</div>
   </div>

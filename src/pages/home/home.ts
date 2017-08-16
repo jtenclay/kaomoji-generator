@@ -30,62 +30,65 @@ export class HomePage {
 
 	currentKao: Kao = new Kao();
 	uneditedKao: Kao = new Kao();
+	currentKaoUsesPattern = false;
+	uneditedKaoUsesPattern = false;
 
-	stockKaos: Kao[] = [{
-		id: 0,
-		face: "U・ᴥ・U",
-		color: "maroon",
-		shadowColor: "brown",
-		shadowLength: 5,
-		patternId: 0,
-		foregroundColor: "white",
-		backgroundColor: "beige"
-	}, {
-		id: 0,
-		face: "  (=`ω´=)  ",
-		color: "aquamarine",
-		shadowColor: "white",
-		shadowLength: 0,
-		patternId: -1,
-		foregroundColor: "white",
-		backgroundColor: "steelblue"
-	}, {
-		id: 0,
-		face: "(✿◕‿◕)",
-		color: "coral",
-		shadowColor: "white",
-		shadowLength: 0,
-		patternId: -1,
-		foregroundColor: "white",
-		backgroundColor: "moccasin"
-	}, {
-		id: 0,
-		face: "(●´ω｀●)",
-		color: "navy",
-		shadowColor: "white",
-		shadowLength: 5,
-		patternId: 0,
-		foregroundColor: "beige",
-		backgroundColor: "moccasin"
-	}, {
-		id: 0,
-		face: "✌︎('ω'✌︎ )",
-		color: "white",
-		shadowColor: "white",
-		shadowLength: 0,
-		patternId: -1,
-		foregroundColor: "white",
-		backgroundColor: "cornflowerblue"
-	}, {
-		id: 0,
-		face: "(｀_´)ゞ",
-		color: "orchid",
-		shadowColor: "white",
-		shadowLength: 0,
-		patternId: -1,
-		foregroundColor: "white",
-		backgroundColor: "blueviolet"
-	}];
+	stockKaos: Kao[] = [
+		{
+			id: 0,
+			face: "U・ᴥ・U",
+			color: "maroon",
+			shadowColor: "brown",
+			shadowLength: 5,
+			patternId: 0,
+			foregroundColor: "white",
+			backgroundColor: "beige"
+		}, {
+			id: 0,
+			face: "  (=`ω´=)  ",
+			color: "aquamarine",
+			shadowColor: "white",
+			shadowLength: 0,
+			patternId: -1,
+			foregroundColor: "white",
+			backgroundColor: "steelblue"
+		}, {
+			id: 0,
+			face: "(✿◕‿◕)",
+			color: "coral",
+			shadowColor: "white",
+			shadowLength: 0,
+			patternId: -1,
+			foregroundColor: "white",
+			backgroundColor: "moccasin"
+		}, {
+			id: 0,
+			face: "(●´ω｀●)",
+			color: "navy",
+			shadowColor: "white",
+			shadowLength: 5,
+			patternId: 0,
+			foregroundColor: "beige",
+			backgroundColor: "moccasin"
+		}, {
+			id: 0,
+			face: "✌︎('ω'✌︎ )",
+			color: "white",
+			shadowColor: "white",
+			shadowLength: 0,
+			patternId: -1,
+			foregroundColor: "white",
+			backgroundColor: "cornflowerblue"
+		}, {
+			id: 0,
+			face: "(｀_´)ゞ",
+			color: "orchid",
+			shadowColor: "white",
+			shadowLength: 0,
+			patternId: -1,
+			foregroundColor: "white",
+			backgroundColor: "blueviolet"
+		}];
 
 	// "~~~" is the placeholder for the foreground color
 	backgroundDefs: string[] = ["url(\"data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='~~~' fill-rule='evenodd'/%3E%3C/svg%3E\")"]
@@ -121,6 +124,9 @@ export class HomePage {
   	this.storage.get("currentKao").then((result) => {
   		if (result.face) {
   			this.currentKao = result;
+  			if (this.currentKao.patternId !== -1) {
+  				this.currentKaoUsesPattern = true;
+  			}
   			this.updateKaoDOM();
   			this.autoResizeKao();
   		}
@@ -272,6 +278,8 @@ export class HomePage {
   togglePatternMenu() {
   	this.uneditedKao.foregroundColor = this.currentKao.foregroundColor;
   	this.uneditedKao.patternId = this.currentKao.patternId;
+  	this.uneditedKaoUsesPattern = this.currentKaoUsesPattern;
+  	this.updateUsesPattern();
   	this.updateKaoDOM();
   	this.showPatternMenuFlag = !this.showPatternMenuFlag;
   	this.showEditMenuFlag = !this.showEditMenuFlag;
@@ -280,9 +288,20 @@ export class HomePage {
   cancelPatternMenu() {
   	this.currentKao.foregroundColor = this.uneditedKao.foregroundColor;
   	this.currentKao.patternId = this.uneditedKao.patternId;
+  	this.currentKaoUsesPattern = this.uneditedKaoUsesPattern;
+  	this.updateUsesPattern();
   	this.updateKaoDOM();
   	this.showPatternMenuFlag = !this.showPatternMenuFlag;
   	this.showEditMenuFlag = !this.showEditMenuFlag;
+  }
+
+  updateUsesPattern() {
+  	if (this.currentKaoUsesPattern === false) {
+  		this.currentKao.patternId = -1;
+  	} else if (this.currentKao.patternId === -1) {
+  		this.currentKao.patternId = 0;
+  	};
+  	this.updateKaoDOM();
   }
 
 }
