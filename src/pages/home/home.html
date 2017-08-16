@@ -6,56 +6,65 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding id="kao-page" [style.background-color]="currentKao.backgroundColor">
+<ion-content class="disable-scroll" padding id="kao-page" [style.background-color]="currentKao.backgroundColor">
 	<div class="kao-wrapper">
 	  <input type="text" id="current-kao" [style.color]="currentKao.color" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()">
   </div>
   <div class="bottom-menu">
   	<div id="hidden-menu" [ngClass]="{'hide-below': !showHiddenMenuFlag}">
-	  	<a (click)="toggleMainMenu()" class="toggle-menu"><ion-icon name="arrow-up"></ion-icon></a>
+	  	<a (click)="toggleMainMenu()" class="static-menu-item"><ion-icon name="arrow-up"></ion-icon></a>
 		  <a>&nbsp;</a>
 		</div>
   	<div class="main-menu" [ngClass]="{'hide-below': !showMainMenuFlag}">
-	  	<a (click)="toggleMainMenu()" class="toggle-menu"><ion-icon name="arrow-down"></ion-icon></a>
+	  	<a (click)="toggleMainMenu()" class="static-menu-item"><ion-icon name="arrow-down"></ion-icon></a>
 		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
 		  <a (click)="saveCurrentKao()">Save</a>
 		  <a (click)="navigateToList()">List</a>
 		</div>
 		<div class="edit-menu" [ngClass]="{'hide-below': !showEditMenuFlag}">
-	  	<a (click)="toggleEditMenu()">Done</a>
+	  	<a (click)="toggleEditMenu()" class="static-menu-item">Done</a>
 		  <a (click)="toggleColorMenu()">Color</a>
 		  <a (click)="toggleShadowMenu()">Shadow</a>
 		  <a (click)="toggleBackgroundMenu()">Background</a>
 		  <a (click)="togglePatternMenu()">Pattern</a>
 	  </div>
   	<div class="color-menu" [ngClass]="{'hide-below': !showColorMenuFlag}">
-	  	<a (click)="cancelColorMenu()">&lt; Cancel</a>
-		  <span>Color: <input [(ngModel)]="currentKao.color" (change)="updateKaoDOM()"></span>
-		  <a (click)="toggleColorMenu()">Done</a>
+	  	<a (click)="cancelColorMenu()" class="static-menu-item">&lt; Cancel</a>
+		  <span>Color: {{currentKao.color}}</span>
+		  <a (click)="toggleColorMenu()" class="static-menu-item">Done</a>
 		</div>
   	<div class="shadow-menu" [ngClass]="{'hide-below': !showShadowMenuFlag}">
-	  	<a (click)="cancelShadowMenu()">&lt; Cancel</a>
-		  <span>Color: <input [(ngModel)]="currentKao.shadowColor" (change)="updateKaoDOM()"></span>
-		  <span>Length: <input [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()"></span>
-		  <a (click)="toggleShadowMenu()">Done</a>
+	  	<a (click)="cancelShadowMenu()" class="static-menu-item">&lt; Cancel</a>
+		  <span>Color: {{currentKao.shadowColor}}</span>
+		  <span>Length (0-20): <input class="lil-input" [(ngModel)]="currentKao.shadowLength" (change)="updateKaoDOM()"></span>
+		  <a (click)="toggleShadowMenu()" class="static-menu-item">Done</a>
 		</div>
   	<div class="background-menu" [ngClass]="{'hide-below': !showBackgroundMenuFlag}">
-	  	<a (click)="cancelBackgroundMenu()">&lt; Cancel</a>
-		  <span>Color: <input [(ngModel)]="currentKao.backgroundColor" (change)="updateKaoDOM()"></span>
-		  <a (click)="toggleBackgroundMenu()">Done</a>
+	  	<a (click)="cancelBackgroundMenu()" class="static-menu-item">&lt; Cancel</a>
+		  <span>Color: {{currentKao.backgroundColor}}</span>
+		  <a (click)="toggleBackgroundMenu()" class="static-menu-item">Done</a>
 		</div>
   	<div class="pattern-menu" [ngClass]="{'hide-below': !showPatternMenuFlag}">
-	  	<a (click)="cancelPatternMenu()">&lt; Cancel</a>
+	  	<a (click)="cancelPatternMenu()" class="static-menu-item">&lt; Cancel</a>
 	  	<span><label><input type="checkbox" [(ngModel)]="currentKaoUsesPattern" (change)="updateUsesPattern()"> Use Pattern</label></span>
-		  <span *ngIf="currentKaoUsesPattern">Id: <input [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
-		  <span *ngIf="currentKaoUsesPattern">Color: <input [(ngModel)]="currentKao.foregroundColor" (change)="updateKaoDOM()"></span>
-		  <a (click)="togglePatternMenu()">Done</a>
+		  <span *ngIf="currentKaoUsesPattern">Id: <input class="lil-input" [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
+		  <span *ngIf="currentKaoUsesPattern">Color: {{currentKao.foregroundColor}}</span>
+		  <a (click)="togglePatternMenu()" class="static-menu-item">Done</a>
 		</div>
   </div>
   <div class="supplement-menu">
   	<div class="color-supp-menu" [ngClass]="{'hide-below': !showColorMenuFlag}">
-  		<div *ngFor="let color of stockColors" [style.background-color]="color"></div>
+  		<div *ngFor="let color of stockColors" (click)="updateKao('color', color)"><div class="color-circle" [style.background-color]="color"></div></div>
+		</div>
+  	<div class="color-supp-menu" [ngClass]="{'hide-below': !showShadowMenuFlag}">
+  		<div *ngFor="let color of stockColors" (click)="updateKao('shadowColor', color)"><div class="color-circle" [style.background-color]="color"></div></div>
+		</div>
+  	<div class="color-supp-menu" [ngClass]="{'hide-below': !currentKaoUsesPattern || !showPatternMenuFlag}">
+  		<div *ngFor="let color of stockColors" (click)="updateKao('foregroundColor', color)"><div class="color-circle" [style.background-color]="color"></div></div>
+		</div>
+		<div class="color-supp-menu" [ngClass]="{'hide-below': !showBackgroundMenuFlag}">
+  		<div *ngFor="let color of stockColors" (click)="updateKao('backgroundColor', color)"><div class="color-circle" [style.background-color]="color"></div></div>
 		</div>
   </div>
   <div id="saved-modal"><p><span>Saved!</span></p></div>
