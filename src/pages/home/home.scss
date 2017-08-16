@@ -25,11 +25,20 @@ page-home {
 		left: 0;
 		width: 100%;
 		display: flex;
-		&:not(.hidden-menu) {
+		-webkit-transition-property: bottom;
+    -webkit-transition-duration: .3s;
+    -webkit-transition-timing-function: easeInOutQuart;
+    transition-property: bottom;
+    transition-duration: .3s;
+    transition-timing-function: easeInOutQuart;
+		&:not(#hidden-menu) {
 			background-color: white;
 			a, span {
 				color: black;
 			}
+		}
+		&.hide-below {
+			bottom: -75px;
 		}
 		a, span {
 			color: white;
