@@ -33,6 +33,8 @@ export class HomePage {
 	currentKaoUsesPattern = false;
 	uneditedKaoUsesPattern = false;
 
+	stockColors = ["white", "black", "red", "cornflowerblue"];
+
 	stockKaos: Kao[] = [
 		{
 			id: 0,
@@ -165,8 +167,6 @@ export class HomePage {
   	}
   	// remove trailing comma and set textShadow
   	this.currentKaoDOM.style.textShadow = textShadow.substring(0, textShadow.length - 2);
-  	this.currentKaoDOM.style.color = this.currentKao.color;
-		this.backgroundDOM.style.backgroundColor = this.currentKao.backgroundColor;
   	if (this.currentKao.patternId !== -1) {
   		// format background SVG and then set it
   		this.backgroundDOM.style.backgroundImage = this.backgroundDefs[this.currentKao.patternId].replace(/~~~/, this.currentKao.foregroundColor);

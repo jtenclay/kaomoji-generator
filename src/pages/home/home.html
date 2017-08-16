@@ -6,9 +6,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding id="kao-page">
+<ion-content padding id="kao-page" [style.background-color]="currentKao.backgroundColor">
 	<div class="kao-wrapper">
-	  <input type="text" id="current-kao" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()">
+	  <input type="text" id="current-kao" [style.color]="currentKao.color" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()">
   </div>
   <div class="bottom-menu">
   	<div id="hidden-menu" [ngClass]="{'hide-below': !showHiddenMenuFlag}">
@@ -51,6 +51,11 @@
 		  <span *ngIf="currentKaoUsesPattern">Id: <input [(ngModel)]="currentKao.patternId" (change)="updateKaoDOM()"></span>
 		  <span *ngIf="currentKaoUsesPattern">Color: <input [(ngModel)]="currentKao.foregroundColor" (change)="updateKaoDOM()"></span>
 		  <a (click)="togglePatternMenu()">Done</a>
+		</div>
+  </div>
+  <div class="supplement-menu">
+  	<div class="color-supp-menu" [ngClass]="{'hide-below': !showColorMenuFlag}">
+  		<div *ngFor="let color of stockColors" [style.background-color]="color"></div>
 		</div>
   </div>
   <div id="saved-modal"><p><span>Saved!</span></p></div>

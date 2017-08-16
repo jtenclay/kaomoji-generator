@@ -72,14 +72,12 @@ export class ListPage {
   	let kaoBackgroundDOM = document.getElementById("kao-" + kaoId).querySelector("div");
   	let kaoDOM = kaoBackgroundDOM.querySelector("span");
   	let textShadow = "";
-  	kaoBackgroundDOM.style.height = this.kaoListHeight + "px";
   	for (let i = 1; i <= kao.shadowLength / 2; i++) { // shadow / 2 because it's half as big
   		textShadow += i + "px " + i + "px 0 " + kao.shadowColor + ", ";
   	}
   	// remove trailing comma and set textShadow
   	kaoDOM.style.textShadow = textShadow.substring(0, textShadow.length - 2);
-  	kaoDOM.style.color = kao.color;
-		kaoBackgroundDOM.style.backgroundColor = kao.backgroundColor;
+  	//kaoDOM.style.color = kao.color;
   	if (kao.patternId >= 0 && kao.patternId < this.backgroundDefs.length) {
   		// format background SVG and then set it
   		kaoBackgroundDOM.style.backgroundImage = this.backgroundDefs[kao.patternId].replace(/~~~/, kao.foregroundColor);
