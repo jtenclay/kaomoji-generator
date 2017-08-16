@@ -49,9 +49,10 @@ export class ListPage {
   	this.kaoListHeight = (this.screenWidth - 96) / 2 / this.screenAspect;
   	let arrayOfKaos: Kao[] = [];
   	this.storage.forEach(function(val, key, i) {
-  		if (key.match(/savedKao[1234567890]/)) {
+  		// check backgroundColor to make sure it's not an empty kao somehow
+  		if (key.match(/savedKao[1234567890]/) && val.backgroundColor) {
 	  		arrayOfKaos.push(val)
-	  		// sort kaos by id to make sure newest is first. unfortunately outside the loop was too late to update DOM order
+	  		// reverse-sort kaos by id to make sure newest is first. unfortunately outside the loop was too late to update DOM order
 	  		arrayOfKaos.sort(function(a, b) {
 		  		return b.id - a.id;
 		  	})
@@ -79,7 +80,7 @@ export class ListPage {
   	kaoDOM.style.textShadow = textShadow.substring(0, textShadow.length - 2);
   	kaoDOM.style.color = kao.color;
 		kaoBackgroundDOM.style.backgroundColor = kao.backgroundColor;
-  	if (kao.patternId !== -1) {
+  	if (kao.patternId >= 0 && kao.patternId < this.backgroundDefs.length) {
   		// format background SVG and then set it
   		kaoBackgroundDOM.style.backgroundImage = this.backgroundDefs[kao.patternId].replace(/~~~/, kao.foregroundColor);
   	} else {

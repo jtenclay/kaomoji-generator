@@ -210,9 +210,15 @@ export class HomePage {
   }
 
   saveCurrentKao() {
+  	let savedDOM = document.getElementById("saved-modal");
   	this.currentKao.id = this.kaoIndexToSave;
   	this.storage.set('savedKao' + this.kaoIndexToSave, this.currentKao);
   	this.kaoIndexToSave++
+  	savedDOM.className = "active";
+  	// reset after a little bit
+  	setTimeout(function() {
+		  savedDOM.className = "";
+		}, 1000);
   }
 
   randomKao() {
