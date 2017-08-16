@@ -12,11 +12,11 @@
   </div>
   <div class="bottom-menu">
   	<div id="hidden-menu" [ngClass]="{'hide-below': !showHiddenMenuFlag}">
-	  	<a (click)="toggleMainMenu()" class="toggle-menu">/&#92;</a>
+	  	<a (click)="toggleMainMenu()" class="toggle-menu"><ion-icon name="arrow-up"></ion-icon></a>
 		  <a>&nbsp;</a>
 		</div>
   	<div class="main-menu" [ngClass]="{'hide-below': !showMainMenuFlag}">
-	  	<a (click)="toggleMainMenu()" class="toggle-menu">&#92;/</a>
+	  	<a (click)="toggleMainMenu()" class="toggle-menu"><ion-icon name="arrow-down"></ion-icon></a>
 		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
 		  <a (click)="saveCurrentKao()">Save</a>
