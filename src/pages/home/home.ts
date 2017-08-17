@@ -244,13 +244,13 @@ export class HomePage {
 
   toggleMenus(menus, attrs, cancel, pattern) {
   	let flagDefs = {
-  		hidden: showHiddenMenuFlag,
-  		main: showMainMenuFlag,
-  		edit: showEditMenuFlag,
-  		color: showColorMenuFlag,
-  		shadow: showShadowMenuFlag,
-  		background: showBackgroundMenuFlag,
-  		pattern: showPatternMenuFlag
+  		hidden: "showHiddenMenuFlag",
+  		main: "showMainMenuFlag",
+  		edit: "showEditMenuFlag",
+  		color: "showColorMenuFlag",
+  		shadow: "showShadowMenuFlag",
+  		background: "showBackgroundMenuFlag",
+  		pattern: "showPatternMenuFlag"
   	}
 
   	// cancel or commit changes
@@ -269,82 +269,8 @@ export class HomePage {
 
 		// toggle menus
 		for (let menu of menus) {
-			this[menu] = !this[menu];
+			this[flagDefs[menu]] = !this[flagDefs[menu]];
 		}
-  }
-
-  toggleMainMenu() {
-  	this.showHiddenMenuFlag = !this.showHiddenMenuFlag;
-  	this.showMainMenuFlag = !this.showMainMenuFlag;
-  }
-
-  toggleEditMenu() {
-  	this.showMainMenuFlag = !this.showMainMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  toggleColorMenu() {
-  	this.uneditedKao.color = this.currentKao.color;
-  	this.updateKaoDOM();
-  	this.showColorMenuFlag = !this.showColorMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  cancelColorMenu() {
-  	this.currentKao.color = this.uneditedKao.color;
-  	this.updateKaoDOM();
-  	this.showColorMenuFlag = !this.showColorMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  toggleShadowMenu() {
-  	this.uneditedKao.shadowColor = this.currentKao.shadowColor;
-  	this.uneditedKao.shadowLength = this.currentKao.shadowLength;
-  	this.updateKaoDOM();
-  	this.showShadowMenuFlag = !this.showShadowMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  cancelShadowMenu() {
-  	this.currentKao.shadowColor = this.uneditedKao.shadowColor;
-  	this.currentKao.shadowLength = this.uneditedKao.shadowLength;
-  	this.updateKaoDOM();
-  	this.showShadowMenuFlag = !this.showShadowMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  toggleBackgroundMenu() {
-  	this.uneditedKao.backgroundColor = this.currentKao.backgroundColor;
-  	this.updateKaoDOM();
-  	this.showBackgroundMenuFlag = !this.showBackgroundMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  cancelBackgroundMenu() {
-  	this.currentKao.backgroundColor = this.uneditedKao.backgroundColor;
-  	this.updateKaoDOM();
-  	this.showBackgroundMenuFlag = !this.showBackgroundMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  togglePatternMenu() {
-  	this.uneditedKao.foregroundColor = this.currentKao.foregroundColor;
-  	this.uneditedKao.patternId = this.currentKao.patternId;
-  	this.uneditedKaoUsesPattern = this.currentKaoUsesPattern;
-  	this.updateUsesPattern();
-  	this.updateKaoDOM();
-  	this.showPatternMenuFlag = !this.showPatternMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
-  }
-
-  cancelPatternMenu() {
-  	this.currentKao.foregroundColor = this.uneditedKao.foregroundColor;
-  	this.currentKao.patternId = this.uneditedKao.patternId;
-  	this.currentKaoUsesPattern = this.uneditedKaoUsesPattern;
-  	this.updateUsesPattern();
-  	this.updateKaoDOM();
-  	this.showPatternMenuFlag = !this.showPatternMenuFlag;
-  	this.showEditMenuFlag = !this.showEditMenuFlag;
   }
 
   updateUsesPattern() {
