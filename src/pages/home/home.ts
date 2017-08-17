@@ -242,6 +242,37 @@ export class HomePage {
   	this.updateKaoDOM();
   }
 
+  toggleMenus(menus, attrs, cancel, pattern) {
+  	let flagDefs = {
+  		hidden: showHiddenMenuFlag,
+  		main: showMainMenuFlag,
+  		edit: showEditMenuFlag,
+  		color: showColorMenuFlag,
+  		shadow: showShadowMenuFlag,
+  		background: showBackgroundMenuFlag,
+  		pattern: showPatternMenuFlag
+  	}
+
+  	// cancel or commit changes
+		for (let attr of attrs) {
+			cancel? this.currentKao[attr] = this.uneditedKao[attr] : this.uneditedKao[attr] = this.currentKao[attr]
+		}
+
+		// cancel or commit pattern
+		if (pattern) {
+			cancel? this.currentKaoUsesPattern = this.uneditedKaoUsesPattern : this.uneditedKaoUsesPattern = this.currentKaoUsesPattern
+			this.updateUsesPattern();
+		}
+
+		// update DOM
+		this.updateKaoDOM();
+
+		// toggle menus
+		for (let menu of menus) {
+			this[menu] = !this[menu];
+		}
+  }
+
   toggleMainMenu() {
   	this.showHiddenMenuFlag = !this.showHiddenMenuFlag;
   	this.showMainMenuFlag = !this.showMainMenuFlag;
@@ -327,7 +358,8 @@ export class HomePage {
 
   saveScreenshot() {
   	let menu = document.getElementById("bottom-menu")
-  	this.statusBar.hide();
+  	let statusBar = this.statusBar;
+  	statusBar.hide();
   	menu.style.display = "none";
   	(<any>navigator).screenshot.URI(function(error,res){
   		console.log(res);
@@ -341,9 +373,9 @@ export class HomePage {
           console.error(msg);
         });
      	}
+     	menu.style.display = "block";
+  		statusBar.show();
 		}, 'jpg', 100);
-  	menu.style.display = "block";
-  	this.statusBar.show();
   }
 
 }
