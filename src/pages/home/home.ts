@@ -4,6 +4,8 @@ import { Platform } from 'ionic-angular';
 import { ListPage } from '../list/list';
 import { Storage } from '@ionic/storage';
 import { Keyboard } from '@ionic-native/keyboard';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Screenshot } from '@ionic-native/screenshot';
 
 class Kao {
 	id: number;
@@ -32,9 +34,6 @@ export class HomePage {
 	uneditedKao: Kao = new Kao();
 	currentKaoUsesPattern = false;
 	uneditedKaoUsesPattern = false;
-
-	// the original alphabetized list
-	// stockColorsUnsorted = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 
 	stockColors = ["Pink","LightPink","HotPink","DeepPink","PaleVioletRed","MediumVioletRed","Lavender","Thistle","Plum","Orchid","Violet","Fuchsia","Magenta","MediumOrchid","DarkOrchid","DarkViolet","BlueViolet","DarkMagenta","Purple","MediumPurple","MediumSlateBlue","SlateBlue","DarkSlateBlue","RebeccaPurple","Indigo","LightSalmon","Salmon","DarkSalmon","LightCoral","IndianRed","Crimson","Red","FireBrick","DarkRed","Orange","DarkOrange","Coral","Tomato","OrangeRed","Gold","Yellow","LightYellow","LemonChiffon","LightGoldenRodYellow","PapayaWhip","Moccasin","PeachPuff","PaleGoldenRod","Khaki","DarkKhaki","GreenYellow","Chartreuse","LawnGreen","Lime","LimeGreen","PaleGreen","LightGreen","MediumSpringGreen","SpringGreen","MediumSeaGreen","SeaGreen","ForestGreen","Green","DarkGreen","YellowGreen","OliveDrab","DarkOliveGreen","MediumAquaMarine","DarkSeaGreen","LightSeaGreen","DarkCyan","Teal","Aqua","Cyan","LightCyan","PaleTurquoise","Aquamarine","Turquoise","MediumTurquoise","DarkTurquoise","CadetBlue","SteelBlue","LightSteelBlue","LightBlue","PowderBlue","LightSkyBlue","SkyBlue","CornflowerBlue","DeepSkyBlue","DodgerBlue","RoyalBlue","Blue","MediumBlue","DarkBlue","Navy","MidnightBlue","Cornsilk","BlanchedAlmond","Bisque","NavajoWhite","Wheat","BurlyWood","Tan","RosyBrown","SandyBrown","GoldenRod","DarkGoldenRod","Peru","Chocolate","Olive","SaddleBrown","Sienna","Brown","Maroon","White","Snow","HoneyDew","MintCream","Azure","AliceBlue","GhostWhite","WhiteSmoke","SeaShell","Beige","OldLace","FloralWhite","Ivory","AntiqueWhite","Linen","LavenderBlush","MistyRose","Gainsboro","LightGray","Silver","DarkGray","DimGray","Gray","LightSlateGray","SlateGray","DarkSlateGray","Black"];
 
@@ -112,7 +111,7 @@ export class HomePage {
 
 	listPage = ListPage;
 
-  constructor(public navCtrl: NavController, public plt: Platform, private storage: Storage, public keyboard: Keyboard) {
+  constructor(public navCtrl: NavController, public plt: Platform, private storage: Storage, public keyboard: Keyboard, private statusBar: StatusBar, public screenshot: Screenshot) {
   	this.screenWidth = plt.width()
   	this.screenHeight = plt.height()
 	  this.storage.forEach((val, key, i) => {
@@ -146,7 +145,6 @@ export class HomePage {
   		if (result.face) {
   			this.currentKao = result
   			this.updateKaoDOM();
-  			this.autoResizeKao();
   		}
   	})
   }
@@ -325,6 +323,27 @@ export class HomePage {
   		this.currentKao.patternId = 0;
   	};
   	this.updateKaoDOM();
+  }
+
+  saveScreenshot() {
+  	let menu = document.getElementById("bottom-menu")
+  	this.statusBar.hide();
+  	menu.style.display = "none";
+  	(<any>navigator).screenshot.URI(function(error,res){
+  		console.log(res);
+    	if(error) {
+        console.error(error);
+    	} else {
+        var params = {data: res.URI, prefix: 'kaomoji_', format: 'JPG', quality: 100, mediaScanner: true};
+        (<any>window).imageSaver.saveBase64Image(params, function (filePath) {
+          console.log('File saved on ' + filePath);
+        }, function (msg) {
+          console.error(msg);
+        });
+     	}
+		}, 'jpg', 100);
+  	menu.style.display = "block";
+  	this.statusBar.show();
   }
 
 }

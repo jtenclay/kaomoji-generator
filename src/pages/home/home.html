@@ -10,7 +10,7 @@
 	<div class="kao-wrapper">
 	  <input type="text" id="current-kao" [style.color]="currentKao.color" [(ngModel)]="currentKao.face" name="face" (keyup)="autoResizeKao()" (paste)="autoResizeKao()">
   </div>
-  <div class="bottom-menu">
+  <div class="bottom-menu" id="bottom-menu">
   	<div id="hidden-menu" [ngClass]="{'hide-below': !showHiddenMenuFlag}">
 	  	<a (click)="toggleMainMenu()" class="static-menu-item"><ion-icon name="arrow-up"></ion-icon></a>
 		  <a>&nbsp;</a>
@@ -19,6 +19,7 @@
 	  	<a (click)="toggleMainMenu()" class="static-menu-item"><ion-icon name="arrow-down"></ion-icon></a>
 		  <a (click)="toggleEditMenu()">Edit</a>
 		  <a (click)="randomKao()">Random</a>
+		  <a (click)="saveScreenshot()">Screenshot</a>
 		  <a (click)="saveCurrentKao()">Save</a>
 		  <a (click)="navigateToList()">List</a>
 		</div>
