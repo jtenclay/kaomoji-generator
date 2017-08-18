@@ -37,3 +37,15 @@ If prompted to update the Ionic CLI, type `Y` and then run `ionic serve` again. 
 *Don't worry if you're thrown an error!* This only happens the first time. Open up dev tools and select an iPhone in landscape orientation, refresh the page, and close out the error.
 
 Click Random at the bottom of the screen to start off with your first kaomoji. Then enjoy!
+
+### To Run on a Device
+
+Run the following:
+
+```bash
+$ ionic cordova platform add ios
+$ ionic build ios
+```
+
+Connect your iPhone to your computer.
+Open up Xcode, open /platforms/ios/Kaomoji.xcodeproj and press Play. You may need to code sign with a development account.
