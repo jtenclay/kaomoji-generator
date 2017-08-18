@@ -1,26 +1,39 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Kaomoji Generator
 
-## How to use this template
+Final project for General Assembly's Web Development Immersive Bootcamp.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+A novelty app for people to make kaomoji (stickers made with text, like (•‿•) ) and share them with friends.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+## User Stories
 
-### With the Ionic CLI:
+* After downloading the app, the user can create and edit faces, save them to a library, and take screenshots
+* The user can change text color, shadow properties, and background pattern/color
+* There is a "random" function (not actually random, since random colors tend to look bizarre together) to produce new kaomoji
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+## Technologies
+
+* Ionic, Cordova, Xcode
+* HTML/CSS (SCSS)
+
+## In the Future
+
+* Better stock ("random") kaomoji, possibly pulled from another source
+* Background animations
+* Faster load; icon & splash screen
+* Share directly from app rather than through screenshot utility
+* Pre-populate for first-time open to avoid the error message
+
+## Try It Out!
+
+Clone this repository and run:
 
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myBlank blank
+$ npm install
+$ ionic serve
 ```
 
-Then, to run it, cd into `myBlank` and run:
+If prompted to update the Ionic CLI, type `Y` and then run `ionic serve` again. Your browser should open up at localhost:8101.
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+*Don't worry if you're thrown an error!* This only happens the first time. Open up dev tools and select an iPhone in landscape orientation, refresh the page, and close out the error.
 
-Substitute ios for android if not on a Mac.
-
+Click Random at the bottom of the screen to start off with your first kaomoji. Then enjoy!

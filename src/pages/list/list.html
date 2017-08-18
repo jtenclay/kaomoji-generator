@@ -9,8 +9,8 @@
   <ion-navbar>
     <ion-title>List</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="toggleEditState()" *ngIf="!currentlyEditingFlag">Edit</button>
-      <button ion-button (click)="toggleEditState()" *ngIf="currentlyEditingFlag">Done</button>
+      <button ion-button (tap)="toggleEditState()" *ngIf="!currentlyEditingFlag">Edit</button>
+      <button ion-button (tap)="toggleEditState()" *ngIf="currentlyEditingFlag">Done</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -19,6 +19,6 @@
 
 <ion-content padding>
 <ul id="kao-ul">
-		<li class="kao-li" *ngFor="let kao of loadedKaos" id="kao-{{kao.id}}"><a *ngIf="currentlyEditingFlag" (click)="deleteKao(kao)">X</a><div [style.height]="kaoListHeight + 'px'" [style.background-color]="kao.backgroundColor" (click)="passKaoAndReturn(kao)"><span [style.color]="kao.color">{{kao.face}}</span></div></li>
+		<li class="kao-li" *ngFor="let kao of loadedKaos" id="kao-{{kao.id}}"><a *ngIf="currentlyEditingFlag" (tap)="deleteKao(kao)">X</a><div [style.height]="kaoListHeight + 'px'" [style.background-color]="kao.backgroundColor" (tap)="passKaoAndReturn(kao)"><span [style.color]="kao.color">{{kao.face}}</span></div></li>
 	</ul>
 </ion-content>
